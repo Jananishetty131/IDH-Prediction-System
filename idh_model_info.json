@@ -1,0 +1,31 @@
+{
+    "model_name": "Random Forest",
+    "features": [
+        "D_Sexo",
+        "D_Edad",
+        "D_Dializador",
+        "D_Bano",
+        "D_Tecnica",
+        "D_PesoSeco",
+        "D_PesoPre",
+        "D_Ganancia",
+        "D_TemperaturaBano",
+        "D_FlujoSangre",
+        "D_FlujoBano",
+        "D_ConductividadBano",
+        "D_ConductividadBicarbonato"
+    ],
+    "categorical_features": [
+        "D_Sexo",
+        "D_Dializador",
+        "D_Bano",
+        "D_Tecnica"
+    ],
+    "threshold": 0.35000000000000003,
+    "target_mapping": {
+        "NO": 0,
+        "SI": 1
+    },
+    "dataset": "Dataset 11",
+    "random_state": 42
+}

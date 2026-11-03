@@ -1,0 +1,13 @@
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+
+# Raw datasets - share the original dataset link instead
+New_IDH_Dataset/
+
+# Temporary files
+*.log

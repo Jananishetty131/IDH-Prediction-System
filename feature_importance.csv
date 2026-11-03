@@ -1,0 +1,37 @@
+Feature,Importance
+num__Pre-Dialysis Blood Pressure,0.3918795318957686
+num__Weight,0.03908514979412687
+num__Dry Weight (kg),0.038353072582507385
+num__Creatinine,0.03799025202692817
+num__Fluid Removal Rate (ml/hour),0.03766472240148362
+num__Urine Output (ml/day),0.03764110111469902
+num__Urea,0.03696242246291982
+num__Hematocrit,0.03545992923836338
+num__Kt/V,0.03531697521030323
+num__Hemoglobin,0.03426014819445565
+num__Age,0.03404449489116854
+num__URR,0.03388729326851986
+num__Heart Rate,0.03205571796278598
+num__Dialysis Duration (hours),0.027884223738058794
+num__Albumin,0.027734424082179764
+num__Potassium,0.026648378306454397
+num__Dialysis Frequency (per week),0.009536008499686147
+cat__Kidney Failure Cause_Diabetes,0.005055294164601716
+cat__Vascular Access Type_Fistula,0.00501804994123601
+cat__Vascular Access Type_Catheter,0.004877618866865465
+cat__Kidney Failure Cause_Other,0.004825082879693718
+cat__Hypertension_True,0.004821999547358313
+cat__Dialysate Composition_Standard,0.0047931877434005355
+cat__Diabetes_False,0.004774415416650951
+cat__Diabetes_True,0.004738205173363171
+cat__Vascular Access Type_Graft,0.004662278033080265
+cat__Dialysate Composition_Customized,0.004636926010384349
+cat__Kidney Failure Cause_Hypertension,0.004567349109041695
+cat__Dialyzer Type_Low-flux,0.004508714610954069
+cat__Hypertension_False,0.0044713514568675535
+cat__Gender_Male,0.004443821927889818
+cat__Gender_Female,0.004341970627933352
+cat__Dialyzer Type_High-flux,0.004273366622638902
+cat__Disease Severity_Moderate,0.0035980627310876565
+cat__Disease Severity_Severe,0.0035882492894537548
+cat__Disease Severity_Mild,0.0016002101770894307
