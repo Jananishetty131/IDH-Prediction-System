@@ -21,7 +21,7 @@
         "D_Bano",
         "D_Tecnica"
     ],
-    "threshold": 0.35000000000000003,
+    "threshold": 0.6500000000000001,
     "target_mapping": {
         "NO": 0,
         "SI": 1

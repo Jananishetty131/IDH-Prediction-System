@@ -1,5 +1,6 @@
 
 from pathlib import Path
+from queue import Empty
 import zipfile
 import json
 import joblib
@@ -26,58 +27,83 @@ from sklearn.metrics import (
 # 1. PATHS
 # --------------------------------------------------
 
-BASE_DIR = Path(__file__).resolve().parent
-ZIP_PATH = BASE_DIR / "New_IDH_Dataset" / "dataset_11.csv.zip"
+BASE_DIR = Path.cwd()
+CSV_PATH = BASE_DIR / "New_IDH_Dataset" / "dataset_11.csv"
 
-if not ZIP_PATH.exists():
-    raise FileNotFoundError(f"Dataset not found: {ZIP_PATH}")
+if not CSV_PATH.exists():
+    raise FileNotFoundError(f"Dataset not found: {CSV_PATH}")
 
 # --------------------------------------------------
 # 2. LOAD DATASET 11
 # --------------------------------------------------
+from pathlib import Path
+import pandas as pd
 
-with zipfile.ZipFile(ZIP_PATH, "r") as archive:
-    csv_files = [
-        name for name in archive.namelist()
-        if name.lower().endswith(".csv")
-    ]
+BASE_DIR = Path.cwd()
+DATASET_DIR = BASE_DIR / "New_IDH_Dataset"
 
-    if not csv_files:
-        raise ValueError("No CSV file found inside ZIP.")
+if DATASET_DIR.exists():
+    print("Files found:", list(DATASET_DIR.iterdir()))
 
-    with archive.open(csv_files[0]) as file:
-        df = pd.read_csv(
-            file,
-            sep=";",
-            index_col=False,
-            usecols=range(25)
-        )
+    CSV_PATH = DATASET_DIR / "dataset_11.csv"
 
-df.columns = df.columns.str.strip()
-
-print("\nDATASET LOADED")
-print("Shape:", df.shape)
+    if CSV_PATH.exists():
+        df = pd.read_csv(CSV_PATH, sep=';')
+        for col in ["D_Sexo", "D_Dializador", "D_Bano", "D_Tecnica"]:
+         print(col, sorted(df[col].dropna().unique()))
+        df.columns = df.columns.astype(str).str.strip()
+        print("ACTUAL COLUMN NAMES:")
+        print(df.columns.tolist())
+        print("DATASET LOADED SUCCESSFULLY!")     
+        print("Shape:", df.shape)
+        print("Empty dataset:", df.empty)
+        print(df.head())
+    else:
+        print("CSV file not found:", CSV_PATH)
+else:
+    print("Dataset folder not found!")
 
 # --------------------------------------------------
 # 3. PREPARE TARGET
 # --------------------------------------------------
-
-df["D_Hipotension"] = (
-    df["D_Hipotension"]
-    .astype(str)
-    .str.strip()
-    .str.upper()
-)
-
-df = df[df["D_Hipotension"].isin(["NO", "SI"])].copy()
-
 df["IDH"] = df["D_Hipotension"].map({
-    "NO": 0,
-    "SI": 1
+    1: 0,  # IDH Present
+    2: 1   # IDH Absen
 })
 
-print("\nTARGET DISTRIBUTION:")
+# Remove rows where target is missing
+df = df.dropna(subset=["IDH"])
+
+# Convert target into integer
+df["IDH"] = df["IDH"].astype(int)
+
+print("IDH distribution:")
 print(df["IDH"].value_counts())
+
+print("Missing IDH values:", df["IDH"].isnull().sum())
+
+print(df.head())
+print(df.info())
+print(df.isnull().sum())
+
+print("IDH distribution:")
+print(df["IDH"].value_counts())
+
+
+print("\n========== TARGET DEBUGGING ==========")
+
+print("Original rows:", len(df))
+
+print("\nTarget column values:")
+print(df["D_Hipotension"].value_counts(dropna=False))
+
+print("\nUnique target values:")
+print(df["D_Hipotension"].unique())
+
+print("\nData types:")
+print(df["D_Hipotension"].dtype)
+
+#raise SystemExit("STOPPING: Checking target values")
 
 # --------------------------------------------------
 # 4. SELECT PRE-DIALYSIS FEATURES
@@ -134,6 +160,10 @@ for col in numerical_features:
 # --------------------------------------------------
 
 # 70% training, 15% validation, 15% testing.
+print("X shape:", X.shape)
+print("y shape:", y.shape)
+if X.empty or y.empty:
+     raise ValueError("Dataset is empty. Check CSV loading and preprocessing.")
 
 X_train, X_remaining, y_train, y_remaining = train_test_split(
     X,
