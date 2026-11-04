@@ -124,7 +124,11 @@ with st.form("idh_prediction_form"):
     with col1:
         st.markdown("#### Patient Details")
 
-        sexo = st.number_input("Sex (D_Sexo)", value=0.0)
+        sexo = st.selectbox(
+            "Sex (D_Sexo)",
+            options=[1, 2],
+            format_func=lambda value: f"Code {value}"
+        )
         edad = st.number_input("Age (D_Edad)", value=0.0)
         dializador = st.number_input("Dialyzer (D_Dializador)", value=0.0)
         bano = st.number_input("Dialysis Bath (D_Bano)", value=0.0)
