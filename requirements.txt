@@ -6,3 +6,5 @@ fastapi
 uvicorn
 streamlit
 requests
+Pillow
+pytesseract
